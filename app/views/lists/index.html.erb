@@ -1,9 +1,17 @@
-<h1>Lists</h1>
-<div id="lists">
-  <% @lists.each do |list| %>
-    <div class="list">
-      <h2><%= list.name %></h2>
-    </div>
-  <% end %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1574267432553-4b4628081c31);">
+  <div class="container">
+    <h1>Save any kind of movies</h1>
+  </div>
 </div>
-<%= link_to 'Create a list', new_list_path %>
+<div class="container py-5">
+  <h2>My lists</h2>
+  <div id="lists">
+    <% @lists.each do |list| %>
+      <% image = list.image_url.empty? || list.image_url.nil? ? "https://images.unsplash.com/photo-1543536448-d209d2d13a1c" : list.image_url %>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= image %>)">
+        <%= list.name %>
+      </div>
+    <% end %>
+  </div>
+  <%= link_to 'Create a list', new_list_path %>
+</div>
