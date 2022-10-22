@@ -1,0 +1,4 @@
+<h1>Create Bookmark for <%= @list.name %></h1>
+<%= render "form", list: @list, bookmark: @bookmark %>
+<hr />
+<%= link_to 'Go back to list', list_path(@list) %>
