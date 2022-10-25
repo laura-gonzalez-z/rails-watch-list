@@ -4,14 +4,24 @@
   </div>
 </div>
 <div class="container py-5">
-  <h2>My lists</h2>
-  <div id="lists">
-    <% @lists.each do |list| %>
-      <% image = list.image_url.empty? || list.image_url.nil? ? "https://images.unsplash.com/photo-1543536448-d209d2d13a1c" : list.image_url %>
-      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= image %>)">
-        <%= list.name %>
+  <div class="row">
+    <div class="col-md-9">
+      <h2>My lists</h2>
+      <div id="lists" class="row">
+        <% @lists.each do |list| %>
+          <div class="col-sm-6">
+            <% image = list.image_url.nil? || list.image_url.empty? ? "https://images.unsplash.com/photo-1543536448-d209d2d13a1c" : list.image_url %>
+            <div class="card-category mb-4" style="background-image: url(<%= image %>)">
+              <%= link_to list_path(list) do %>
+                <%= list.name %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+    <div class="col-md-3">
+      <%= link_to raw('<i class="fa-solid fa-plus"></i> Create a list'), new_list_path, class: 'btn d-block btn-primary btn-lg py-3' %>
+    </div>
   </div>
-  <%= link_to 'Create a list', new_list_path %>
 </div>
