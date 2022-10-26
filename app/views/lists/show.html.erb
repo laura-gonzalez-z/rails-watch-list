@@ -1,4 +1,4 @@
-<% image = @list.image_url.nil? || @list.image_url.empty? ? "https://images.unsplash.com/photo-1543536448-d209d2d13a1c" : @list.image_url %>
+<% image = @list.photo.attached? ? (cl_image_path @list.photo.key) : "https://images.unsplash.com/photo-1543536448-d209d2d13a1c" %>
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= image %>);">
   <div class="container">
     <h1><%= @list.name %></h1>
@@ -8,7 +8,13 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between">
     <%= link_to raw('<i class="fa-solid fa-chevron-left"></i> Go back to lists'), lists_path, class: 'btn btn-primary mb-4 me-1' %>
-    <a href="#bookmark-form" class="btn btn-primary mb-4 ms-1"><i class="fa-solid fa-plus"></i> Add a movie</a>
+    <a href="#bookmark-form" data-bs-toggle="collapse" class="btn btn-primary mb-4 ms-1" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fa-solid fa-plus"></i> Add a movie</a>
+  </div>
+  <div class="collapse" id="bookmark-form">
+    <div class="p-4 bg-white shadow-sm mb-4">
+      <h2>Create Bookmark for <%= @list.name %></h2>
+      <%= render "bookmarks/form", list: @list, bookmark: @bookmark %>
+    </div>
   </div>
   <%= raw("<h2>You haven't saved any movies yet!</h2>") if @list.movies.empty? %>
 
@@ -33,8 +39,5 @@
     <% end %>
   </div>
   <hr />
-  <div class="py-3" id="bookmark-form">
-    <h2>Create Bookmark for <%= @list.name %></h2>
-    <%= render "bookmarks/form", list: @list, bookmark: @bookmark %>
-  </div>
+
 </div>
