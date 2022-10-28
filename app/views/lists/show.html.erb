@@ -11,7 +11,7 @@
     <a href="#bookmark-form" data-bs-toggle="collapse" class="btn btn-primary mb-4 ms-1" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fa-solid fa-plus"></i> Add a movie</a>
   </div>
   <div class="collapse" id="bookmark-form">
-    <div class="p-4 bg-white shadow-sm mb-4">
+    <div class="p-4 bg-white rounded shadow-sm mb-4">
       <h2>Create Bookmark for <%= @list.name %></h2>
       <%= render "bookmarks/form", list: @list, bookmark: @bookmark %>
     </div>
@@ -22,16 +22,16 @@
     <% @list.movies.each do |movie| %>
       <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
       <div class="col-12 col-sm-6 mb-4">
-        <div class="bg-white rounded shadow-sm h-100">
-          <%= image_tag movie.poster_url, alt: movie.title, class: "movie-img rounded-top" %>
-          <div class="p-3 rounded-bottom d-flex flex-column">
-            <strong><%= movie.title %> <span class="text-muted font-weight-normal">• <%= movie.rating %> <i class="fas fa-star star-yellow"></i></span></strong>
-            <small class="text-muted"><%= movie.overview %></small>
-            <div class="d-flex align-items-end justify-content-between pt-4">
-              <div>
-                <i class="fas fa-quote-left me-2"></i><small class="flex-grow-1"><%= bookmark.comment %></small>
+        <div class="bg-white rounded shadow-sm h-100 bookmark overflow-hidden">
+          <%= image_tag movie.poster_url, alt: movie.title, class: "movie-image" %>
+          <div class="p-3 d-flex flex-column">
+            <h3><span class="fw-bold"><%= movie.title %></span> <span class="text-grey">• <%= movie.rating %> <i class="fas fa-star star-yellow"></i></span></h3>
+            <small class="text-grey"><%= movie.overview %></small>
+            <div class="d-flex align-items-end pt-4">
+              <div class="flex-grow-1">
+                <i class="fas fa-quote-left me-2"></i><small><%= bookmark.comment %></small>
               </div>
-              <small class="text-right flex-shrink-0"><%= link_to "delete", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list"}, class: 'text-danger' %></small>
+              <small class="text-right ms-1"><%= link_to "delete", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list"}, class: 'text-danger' %></small>
             </div>
           </div>
         </div>
