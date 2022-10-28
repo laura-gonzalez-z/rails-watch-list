@@ -39,5 +39,32 @@
     <% end %>
   </div>
   <hr />
-
+  <div class="row">
+    <div class="col-12 col-sm-6">
+      <h3>Reviews</h3>
+      <% if @list.reviews.empty? %>
+        <h4 class="text-grey">Be the first one to review this list</h4>
+      <% end %>
+      <% @list.reviews.each do |review| %>
+        <div>
+          <% review.rating.times do %>
+            <i class="fas fa-star star-yellow"></i>
+          <% end %>
+          <small><em class="text-muted"><%= distance_of_time_in_words_to_now(review.created_at) %> ago</em></small>
+          <p class="mb-0"><%= review.content %></p>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+    <div class="col-12 col-sm-6">
+      <div class="bg-white rounded p-3">
+        <h5>Add your review</h5>
+        <%= simple_form_for [@list, @review], data: { controller: "form-submit" } do |f| %>
+          <%= f.input :content, as: :text, placeholder: "Add your review here..." %>
+          <%= f.input :rating, as: :select, collection: (1..5), required: true, prompt: "What's your rating", input_html: { data: { controller: "star-rating", action: "change->form-submit#submit"} } %>
+          <%= f.submit class:"d-none" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
